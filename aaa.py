@@ -86,7 +86,6 @@ class Downsample_PASA_group_softmax(nn.Module):
         n,c1,p,q,r = x.shape
         x = x.permute(1,0,2,3,4).reshape(2, c1//2, n, p, q, r).permute(2,0,1,3,4,5)
         
-        'why is P axis permuted'
         n,c2,p,q,r = sigma.shape
         sigma = sigma.permute(2,0,1,3,4).reshape((p//(self.kernel_size*self.kernel_size*self.kernel_size), self.kernel_size*self.kernel_size*self.kernel_size,n,c2,q.r)).permute(2,0,3,1,4,5)
 
