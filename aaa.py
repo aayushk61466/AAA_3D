@@ -6,12 +6,10 @@ import numpy as np
 import cv2
 
 def get_pad_layer(pad_type):
-    if(pad_type in ['refl','reflect']):
-        PadLayer = nn.ReflectionPad2d
+    if(pad_type in ['const','constant']):
+        PadLayer = nn.ConstantPad3d
     elif(pad_type in ['repl','replicate']):
         PadLayer = nn.ReplicationPad3d
-    elif(pad_type=='zero'):
-        PadLayer = nn.ZeroPad3d
     else:
         print('Pad type [%s] not recognized'%pad_type)
     return PadLayer
