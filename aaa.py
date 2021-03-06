@@ -15,7 +15,6 @@ def get_pad_layer(pad_type):
     return PadLayer
 
 
-
 class Downsample(nn.Module):
     def __init__(self, pad_type='reflect', filt_size=3, stride=2, channels=None, pad_off=0):
         super(Downsample, self).__init__()
@@ -28,20 +27,10 @@ class Downsample(nn.Module):
         self.channels = channels
 
         # print('Filter size [%i]'%filt_size)
-        if(self.filt_size==1):
-            a = np.array([1.,])
-        elif(self.filt_size==2):
-            a = np.array([1., 1.])
-        elif(self.filt_size==3):
+
+        if(self.filt_size==3):
             a = np.array([1., 2., 1.])
-        elif(self.filt_size==4):    
-            a = np.array([1., 3., 3., 1.])
-        elif(self.filt_size==5):    
-            a = np.array([1., 4., 6., 4., 1.])
-        elif(self.filt_size==6):    
-            a = np.array([1., 5., 10., 10., 5., 1.])
-        elif(self.filt_size==7):    
-            a = np.array([1., 6., 15., 20., 15., 6., 1.])
+
 
         filt_2d = torch.Tensor(a[:,None]*a[None,:])
         filt = torch.Tensor(filt_2d[:,:,None]*filt_2d[:,None,:]*filt_2d[None,:,:])
@@ -54,9 +43,6 @@ class Downsample(nn.Module):
         return F.conv3d(self.pad(inp), self.filt, stride=self.stride, groups=inp.shape[1])
     
     
-    
-    
-
 class Downsample_PASA_group_softmax(nn.Module):
 
     def __init__(self, in_channels, kernel_size, stride=1, pad_type='reflect', group=2):
